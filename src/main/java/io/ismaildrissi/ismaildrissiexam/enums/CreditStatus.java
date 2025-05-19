@@ -1,7 +1,7 @@
 package io.ismaildrissi.ismaildrissiexam.enums;
 
 public enum CreditStatus {
-    PENDING,
-    ACCEPTED,
-    REJECTED
+    PERSONAL_CREDIT,
+    IMOBILIER_CREDIT,
+    PROFESSIONNEL_CREDIT,
 }

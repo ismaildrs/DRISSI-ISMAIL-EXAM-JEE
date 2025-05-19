@@ -13,7 +13,5 @@ public interface ClientService {
     List<ClientDTO> findAll();
 
     Optional<ClientDTO> findById(Long id);
-
-
     void delete(Long id);
 }

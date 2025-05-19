@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("PROFESSIONAL")
 public class ProfessionalCredit extends Credit {
-    private String reason; // Motif
-    private String companyName; // Raison sociale
+    private String reason;
+    private String companyName;
 }

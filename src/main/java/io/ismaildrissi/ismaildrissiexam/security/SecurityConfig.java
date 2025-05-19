@@ -1,7 +1,6 @@
 package io.ismaildrissi.ismaildrissiexam.security;
 
 //import com.nimbusds.jose.jwk.source.ImmutableSecret;
-//import io.ismaildrissi.app.digitalbanking.dtos.CustomerDTO;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

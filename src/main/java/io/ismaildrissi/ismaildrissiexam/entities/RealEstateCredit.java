@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("REAL_ESTATE")
 public class RealEstateCredit extends Credit {
     @Enumerated(EnumType.STRING)
-    private PropertyType propertyType; // Apartment, House, Commercial
+    private PropertyType propertyType;
     
     public enum PropertyType {
         APARTMENT, HOUSE, COMMERCIAL

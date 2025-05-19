@@ -1,15 +1,14 @@
 package io.ismaildrissi.ismaildrissiexam.services;
 
-import io.ismaildrissi.ismaildrissiexam.entities.Repayment;
+import io.ismaildrissi.ismaildrissiexam.dtos.RepaymentDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RepaymentService {
-    List<Repayment> getAllRepayments();
-    Repayment getRepaymentById(Long id);
-    Repayment saveRepayment(Repayment repayment);
-    void deleteRepayment(Long id);
-    
-    // Credit-related operations
-    List<Repayment> getRepaymentsByCreditId(Long creditId);
+    RepaymentDTO save(RepaymentDTO repaymentDTO);
+    List<RepaymentDTO> findAll();
+    Optional<RepaymentDTO> findById(Long id);
+    void delete(Long id);
+    List<RepaymentDTO> findByCreditId(Long creditId);
 }

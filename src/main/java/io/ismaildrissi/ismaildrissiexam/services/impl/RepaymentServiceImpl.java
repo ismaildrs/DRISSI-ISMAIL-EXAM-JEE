@@ -1,6 +1,8 @@
 package io.ismaildrissi.ismaildrissiexam.services.impl;
 
+import io.ismaildrissi.ismaildrissiexam.dtos.RepaymentDTO;
 import io.ismaildrissi.ismaildrissiexam.entities.Repayment;
+import io.ismaildrissi.ismaildrissiexam.mappers.RepaymentMapper;
 import io.ismaildrissi.ismaildrissiexam.repositories.RepaymentRepository;
 import io.ismaildrissi.ismaildrissiexam.services.RepaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,37 +18,48 @@ import java.util.stream.Collectors;
 public class RepaymentServiceImpl implements RepaymentService {
 
     private final RepaymentRepository repaymentRepository;
+    private final RepaymentMapper repaymentMapper;
 
     @Autowired
-    public RepaymentServiceImpl(RepaymentRepository repaymentRepository) {
+    public RepaymentServiceImpl(RepaymentRepository repaymentRepository, RepaymentMapper repaymentMapper) {
         this.repaymentRepository = repaymentRepository;
+        this.repaymentMapper = repaymentMapper;
     }
 
     @Override
-    public List<Repayment> getAllRepayments() {
-        return repaymentRepository.findAll();
+    public RepaymentDTO save(RepaymentDTO repaymentDTO) {
+        Repayment repayment = repaymentMapper.toEntity(repaymentDTO);
+        repayment = repaymentRepository.save(repayment);
+        return repaymentMapper.toDto(repayment);
     }
 
     @Override
-    public Repayment getRepaymentById(Long id) {
+    @Transactional(readOnly = true)
+    public List<RepaymentDTO> findAll() {
+        return repaymentRepository.findAll().stream()
+                .map(repaymentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<RepaymentDTO> findById(Long id) {
         return repaymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Repayment not found with id: " + id));
+                .map(repaymentMapper::toDto);
     }
 
     @Override
-    public Repayment saveRepayment(Repayment repayment) {
-        return repaymentRepository.save(repayment);
-    }
-
-    @Override
-    public void deleteRepayment(Long id) {
+    public void delete(Long id) {
         repaymentRepository.deleteById(id);
     }
 
     @Override
-    public List<Repayment> getRepaymentsByCreditId(Long creditId) {
+    @Transactional(readOnly = true)
+    public List<RepaymentDTO> findByCreditId(Long creditId) {
         return repaymentRepository.findAll().stream()
-                .filter(repayment -> repayment.getCredit() != null && repayment.getCredit().getId().equals(creditId))
+                .filter(repayment -> repayment.getCredit() != null && 
+                        repayment.getCredit().getId().equals(creditId))
+                .map(repaymentMapper::toDto)
                 .collect(Collectors.toList());
     }
 }
